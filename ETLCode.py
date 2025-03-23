@@ -36,3 +36,9 @@ filtered_df = df[
     (df["maximumtemperature"] < 20) &
     (df["maximumtemperature"].notna())
 ]
+
+
+# Шаг 3: Сохранение результатов
+clean_filename = "filtered_forecasts.csv"
+filtered_df.to_csv(clean_filename, index=False)
+
