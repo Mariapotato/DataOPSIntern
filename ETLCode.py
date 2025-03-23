@@ -42,3 +42,26 @@ filtered_df = df[
 clean_filename = "filtered_forecasts.csv"
 filtered_df.to_csv(clean_filename, index=False)
 
+# Загрузка в SQLite
+engine = create_engine("sqlite:///weather_forecasts.db")
+filtered_df.to_sql(
+    "forecasts",
+    engine,
+    if_exists="replace",
+    index=False,
+    dtype={
+        "code": Integer(),
+        "forecastdate": Text(),
+        "forecastend": Text(),
+        "forecaststart": Text(),
+        "forecasttype": Text(),
+        "maximumtemperature": Float(),
+        "minimumtemperature": Float(),
+        "notes": Text(),
+        "precipitationtype": Text(),
+        "global_id": Integer()
+    }
+)
+
+print(f"Отфильтровано {len(df) - len(filtered_df)} записей")
+print(f"Результаты сохранены в {clean_filename} и SQLite БД")
